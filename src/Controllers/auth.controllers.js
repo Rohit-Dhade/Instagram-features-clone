@@ -39,7 +39,7 @@ async function authRegister(req, res) {
     { expiresIn: "1d" },
   );
 
-  res.cookie("jwt_token", token);
+  res.cookie("token", token);
 
   res.status(201).json({
     message: "Account created Successfully",
@@ -80,7 +80,7 @@ async function authlogin (req, res) {
     process.env.JWT_SECRET
     );
 
-    res.cookie('Token' , token);
+  res.cookie('token' , token);
 
     res.status(200).json({
         message:"User logged in Successfully."
