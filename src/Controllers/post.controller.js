@@ -80,7 +80,7 @@ async function likePostController(req, res) {
 
   if (!post) {
     return res.status(400).json({
-      message: "Post Doesn not exists.",
+      message: "Post Does not exists.",
     });
   }
 
