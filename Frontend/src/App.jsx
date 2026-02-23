@@ -1,9 +1,12 @@
-import Approutes from './routes'
+import Approutes from "./Approutes.jsx";
+import { AuthProvider } from "./features/auth/auth.context";
 
 const App = () => {
   return (
-    <Approutes/>
-  )
-}
+    <AuthProvider>
+      <Approutes />
+    </AuthProvider>
+  );
+};
 
-export default App
+export default App;
