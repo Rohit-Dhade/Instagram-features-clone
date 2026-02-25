@@ -1,31 +1,26 @@
-import {useContext} from 'react';
-import { AuthContext } from '../auth.context';
-import {login , register , getme} from "../services/auth.api";
+import { useContext } from "react";
+import { login, Register } from "../services/auth.api";
+import { AuthContext } from "../auth.context";
 
-export const useAuth = () =>{
-    const context = useContext(AuthContext)
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  const { user, setuser, loading, setloading } = context;
 
-    const {user , loading , setUser , setLoading} = context
+  const handlelogin = async (username, password) => {
+    setloading(true);
+    const response = await login(username, password);
+    setuser(response.data.user_info);
+    setloading(false);
+  };
 
-    const handleLogin = async (username , password) =>{
-        setLoading(true)
+  const handleRegister = async(username , email , password)=>{
+    setloading(true);
+    const response = await Register(username , email, password);
+    setuser(response.data.user_info);
+    setloading(false);
+  }
 
-        const response = await login(username , password)
-
-        setUser(response.user_info)
-
-        setLoading(false)
-
-    }
-
-    const handleRegister = async (username , email , password) =>{
-        setLoading(true)
-        const response = await register(username , email , password);
-        setUser(response.user_info)
-        setLoading(false)
-    }
-
-    return{
-        user , loading, handleLogin , handleRegister
-    }
-}
+  return {
+    user , loading , handlelogin , handleRegister
+  }
+};

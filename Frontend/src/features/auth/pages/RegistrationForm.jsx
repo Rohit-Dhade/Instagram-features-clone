@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import { useAuth } from "../hooks/useAuth";
 
 const RegistrationForm = () => {
-  const { user, loading, handleRegister } = useAuth();
+  const { user, loading,handlelogin, handleRegister } = useAuth();
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
