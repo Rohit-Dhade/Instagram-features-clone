@@ -56,7 +56,7 @@ async function authlogin(req, res) {
 
   const user = await UserModel.findOne({
     $or: [{ username }, { email }],
-  });
+  }).select("+password");
 
   if (!user) {
     return res.status(400).json({
