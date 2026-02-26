@@ -9,18 +9,21 @@ export const useAuth = () => {
   const handlelogin = async (username, password) => {
     setloading(true);
     const response = await login(username, password);
+    setuser(response);
+    setloading(false);
+  };
+
+  const handleRegister = async (username, email, password) => {
+    setloading(true);
+    const response = await Register(username, email, password);
     setuser(response.data.user_info);
     setloading(false);
   };
 
-  const handleRegister = async(username , email , password)=>{
-    setloading(true);
-    const response = await Register(username , email, password);
-    setuser(response.data.user_info);
-    setloading(false);
-  }
-
   return {
-    user , loading , handlelogin , handleRegister
-  }
+    user,
+    loading,
+    handlelogin,
+    handleRegister,
+  };
 };
