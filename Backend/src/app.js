@@ -2,6 +2,7 @@ const express = require("express");
 const cookieparser = require("cookie-parser");
 const cors = require("cors");
 const app = express();
+app.set("etag", false);
 const authRouter = require("./routes/auth.routes");
 const postRouter = require("./routes/post.routes");
 const userRouter = require("./routes/user.routes");

@@ -95,14 +95,58 @@ async function likePostController(req, res) {
   });
 }
 
-async function getFeedController(req, res) {
-  const posts = await postModel.find().populate("user");
+async function UnlikePostController(req, res) {
+  const postId = req.params.postId;
+  const username = req.user.username;
 
-  return res.status(200).json({
-    message: "All posts",
-    posts,
+  const post = await postModel.findById(postId);
+
+  if (!post) {
+    return res.status(400).json({
+      message: "Post Does not exists.",
+    });
+  }
+
+  const islike = await LikeModel.findOne({
+    post: postId,
+    user: username,
   });
-  
+
+  if(!islike){
+    return res.status(400).json({
+      message : "You have not liked this post"
+    })
+  }
+
+  await LikeModel.findOneAndDelete({_id : islike._id});
+
+
+  res.status(200).json({
+    message: "Post Unliked Succesfully"
+  });
+}
+
+async function getFeedController(req, res) {
+  const user = req.user
+
+    const posts = await Promise.all((await postModel.find({}).populate("user").lean())
+        .map(async (post) => {
+            const isLiked = await LikeModel.findOne({
+                user: user.username,
+                post: post._id
+            })
+
+            post.isLiked = Boolean(isLiked)
+
+            return post
+        }))
+
+
+
+    res.status(200).json({
+        message: "posts fetched successfully.",
+        posts
+    })
 }
 
 module.exports = {
@@ -110,5 +154,6 @@ module.exports = {
   getPostController,
   getPostDetailsController,
   likePostController,
+  UnlikePostController,
   getFeedController,
 };
