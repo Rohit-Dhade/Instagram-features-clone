@@ -1,0 +1,32 @@
+.Others-list{
+    // border: 2px solid yellow;
+    position: absolute;
+    top: 5rem;
+    right: 0rem;
+    width: 20rem;
+    
+}
+
+
+.Others-item{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+//   width: 100%;
+// //   border: 2px solid red;
+//   display: flex;
+//     justify-content: space-between;
+//     // flex-direction: column;
+}
+
+.profile-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.username {
+  font-weight: 500;
+}

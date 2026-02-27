@@ -1,0 +1,25 @@
+.follower-list{
+    // border: 2px solid purple;
+    position: absolute;
+    top: 5rem;
+    left: 0rem;
+}
+
+
+.follower-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+}
+
+.profile-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.username {
+  font-weight: 500;
+}
