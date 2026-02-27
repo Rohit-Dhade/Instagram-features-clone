@@ -37,6 +37,7 @@ async function followUserController(req, res) {
   const followUser = await followModel.create({
     follower: followerUsername,
     followee: followeeUsername,
+    imgUrl: isFolloweeExits.profileImage,
   });
 
   const request = await requestModel.create({
@@ -74,34 +75,90 @@ async function unfollowUserController(req, res) {
 
 async function requestStatusController(req, res) {
   const followerUsername = req.params.username;
+  const followeeUsername = req.user.username;
   const result = req.params.status;
 
-  if (result !== 'pending' && 
-    result !== 'accepted' && 
-    result !== 'rejected') {
-    
+  if (result !== "pending" && result !== "accepted" && result !== "rejected") {
     return res.status(400).json({
-        message: "Invalid request. Should be pending, accepted or rejected"
+      message: "Invalid request. Should be pending, accepted or rejected",
     });
-}
+  }
 
-  const isUserExists = await requestModel.findOne({
-    username: followerUsername,
+  const isUserExists = await followModel.findOne({
+    follower: followerUsername,
+    followee: followeeUsername,
+    // username: followerUsername,
   });
 
   if (!isUserExists) {
     return res.status(400).json({
-      message: `${followerUsername} does not exists in your requests`,
+      message: `${followeeUsername} does not exists in your requests`,
     });
   }
 
-  await followModel.findOneAndUpdate({follower:followerUsername} , { status: result });
+  await followModel.findOneAndUpdate(
+    { followee: followeeUsername },
+    { status: result },
+  );
 
-  await requestModel.findByIdAndUpdate(isUserExists._id , { status: result });
+  await requestModel.findByIdAndUpdate(isUserExists._id, { status: result });
 
   res.status(200).json({
     message: `your request has been ${result}`,
   });
 }
 
-module.exports = { followUserController, unfollowUserController , requestStatusController };
+async function followingController(req, res) {
+  const user = req.user.username;
+  const Alldata = await followModel.find({ followee: user });
+
+  return res.status(200).json({
+    message: "All data",
+    Alldata,
+  });
+}
+
+async function followerController(req, res) {
+  const user = req.user.username;
+  const Alldata = await followModel.find({ follower: user });
+
+  return res.status(200).json({
+    message: "All data",
+    Alldata,
+  });
+}
+
+async function getAllUserController(req, res) {
+  const currentUser = req.user.username;
+
+  const relationships = await followModel.find({
+    $or: [
+      { follower: currentUser, status: "accepted" },
+      { followee: currentUser, status: "accepted" },
+    ],
+  });
+
+  const excludedUsers = relationships.map((rel) =>
+    rel.follower === currentUser ? rel.followee : rel.follower,
+  );
+
+  excludedUsers.push(currentUser);
+
+  const allUsers = await UserModel.find({
+    username: { $nin: excludedUsers },
+  });
+
+  return res.status(200).json({
+    message: "All users.",
+    allUsers,
+  });
+}
+
+module.exports = {
+  followUserController,
+  unfollowUserController,
+  requestStatusController,
+  followingController,
+  followerController,
+  getAllUserController,
+};

@@ -8,6 +8,9 @@ const followSchema = new mongoose.Schema(
     followee: {
       type: String,
     },
+    imgUrl: {
+      type: String,
+    },
     status: {
       type: String,
       default: "pending",

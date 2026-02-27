@@ -4,6 +4,114 @@ const ImageKit = require("@imagekit/nodejs");
 const { toFile } = require("@imagekit/nodejs");
 const jwt = require("jsonwebtoken");
 
+const profiles = [
+  {
+    username: "rohit01",
+    email: "rohit01@gmail.com",
+    profileImage: "https://randomuser.me/api/portraits/men/1.jpg",
+    bio: "Future ML Engineer 🚀",
+    password: "rohit123"
+  },
+  {
+    username: "sameksha02",
+    email: "sameksha02@gmail.com",
+    profileImage: "https://randomuser.me/api/portraits/women/2.jpg",
+    bio: "Coffee + Code ☕💻",
+    password: "sameksha123"
+  },
+  {
+    username: "devraj03",
+    email: "devraj03@gmail.com",
+    profileImage: "https://randomuser.me/api/portraits/men/3.jpg",
+    bio: "Backend Developer",
+    password: "devraj123"
+  },
+  {
+    username: "ananya04",
+    email: "ananya04@gmail.com",
+    profileImage: "https://randomuser.me/api/portraits/women/4.jpg",
+    bio: "UI/UX Designer 🎨",
+    password: "ananya123"
+  },
+  {
+    username: "techguru05",
+    email: "techguru05@gmail.com",
+    profileImage: "https://randomuser.me/api/portraits/men/5.jpg",
+    bio: "JavaScript Enthusiast",
+    password: "techguru123"
+  },
+  {
+    username: "fitness06",
+    email: "fitness06@gmail.com",
+    profileImage: "https://randomuser.me/api/portraits/women/6.jpg",
+    bio: "Gym | Discipline | Growth",
+    password: "fitness123"
+  },
+  {
+    username: "coder07",
+    email: "coder07@gmail.com",
+    profileImage: "https://randomuser.me/api/portraits/men/7.jpg",
+    bio: "MERN Stack Developer",
+    password: "coder123"
+  },
+  {
+    username: "travel08",
+    email: "travel08@gmail.com",
+    profileImage: "https://randomuser.me/api/portraits/women/8.jpg",
+    bio: "Exploring the world 🌍",
+    password: "travel123"
+  },
+  {
+    username: "photoman09",
+    email: "photoman09@gmail.com",
+    profileImage: "https://randomuser.me/api/portraits/men/9.jpg",
+    bio: "Photography Lover 📸",
+    password: "photo123"
+  },
+  {
+    username: "reader10",
+    email: "reader10@gmail.com",
+    profileImage: "https://randomuser.me/api/portraits/women/10.jpg",
+    bio: "Books are life 📚",
+    password: "reader123"
+  },
+  {
+    username: "gamer11",
+    email: "gamer11@gmail.com",
+    profileImage: "https://randomuser.me/api/portraits/men/11.jpg",
+    bio: "Gaming is passion 🎮",
+    password: "gamer123"
+  },
+  {
+    username: "artist12",
+    email: "artist12@gmail.com",
+    profileImage: "https://randomuser.me/api/portraits/women/12.jpg",
+    bio: "Sketching my dreams ✏️",
+    password: "artist123"
+  },
+  {
+    username: "startup13",
+    email: "startup13@gmail.com",
+    profileImage: "https://randomuser.me/api/portraits/men/13.jpg",
+    bio: "Building something big 💡",
+    password: "startup123"
+  },
+  {
+    username: "nature14",
+    email: "nature14@gmail.com",
+    profileImage: "https://randomuser.me/api/portraits/women/14.jpg",
+    bio: "Nature heals 🌿",
+    password: "nature123"
+  },
+  {
+    username: "music15",
+    email: "music15@gmail.com",
+    profileImage: "https://randomuser.me/api/portraits/men/15.jpg",
+    bio: "Music is therapy 🎵",
+    password: "music123"
+  }
+];
+
 const client = new ImageKit({
   privateKey: process.env.IMAGE_PRIVATE_KEY,
 });
